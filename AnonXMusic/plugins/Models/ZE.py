@@ -9,8 +9,8 @@ import random
 from pyrogram import Client
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup
 from strings.filters import command
-from AnonX import (Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app)
-from AnonX import app
+from AnonXMusic import (Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app)
+from AnonXMusic import app
 from random import  choice, randint
 
                 
@@ -29,12 +29,12 @@ async def huhh(client: Client, message: Message):
                         "᳒𝐌𝐎𝐃𝐘 ", url=f"https://t.me/UP_UO"), 
                  ],[
                     InlineKeyboardButton(
-                        "ρ᥆kᥱꪔ᥆ꪀ", url=f"https://t.me/devpokemon"),
+                        "SUPPORT", url=f"https://t.me/UI_OS"),
                 ],[
                     InlineKeyboardButton(
-                        "𝐶𝑅𝐼𝑆𝑇𝐼𝑁", url=f"https://t.me/dr_zeiss"),
+                        "DEV2", url=f"https://t.me/MRAT_MODY"),
                     InlineKeyboardButton(
-                        "ꪔᥲ️ꪀ᥆᥆", url=f"https://t.me/C1_I_I"),
+                        "𝐌𝐎𝐃𝐘", url=f"https://t.me/UP_UO"),
                 ],[
                 
                     InlineKeyboardButton(
