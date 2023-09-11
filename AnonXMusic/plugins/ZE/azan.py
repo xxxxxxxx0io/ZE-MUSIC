@@ -48,7 +48,7 @@ async def kill():
 
 async def play(i):
   assistant = await group_assistant(Anon,i)
-  file_path = "./AnonXMusic/assets/azan.mp3"
+  file_path = "./AnonXMusic/assets/azan.m4a"
   stream = AudioPiped(file_path, audio_parameters=HighQualityAudio())
   try:
       await assistant.join_group_call(
