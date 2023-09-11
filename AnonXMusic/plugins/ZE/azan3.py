@@ -9,7 +9,7 @@ from pyrogram.raw import types
 from AnonXMusic import app
 from datetime import datetime
 import requests
-import pyadox
+import pytz
 from AnonXMusic.core.call import Anon
 from pytgcalls import PyTgCalls, StreamType
 from pytgcalls.types.input_stream import AudioPiped, AudioVideoPiped
@@ -22,7 +22,7 @@ from pyrogram.errors import (
     UserNotParticipant,
 )
 
-adox = pyatz.timezone('Africa/Cairo')
+adox = pytz.timezone('Africa/Cairo')
 
 chat = []
 
