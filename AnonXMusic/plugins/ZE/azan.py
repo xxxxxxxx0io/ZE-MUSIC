@@ -99,7 +99,7 @@ def prayer_time():
        asyncio.sleep(5)
        print(e)        
       
-
+async def azan():
   while not await asyncio.sleep(2):
     if prayer_time():
      prayer = prayer_time()
