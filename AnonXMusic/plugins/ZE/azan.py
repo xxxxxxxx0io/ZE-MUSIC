@@ -45,7 +45,7 @@ async def kill():
     await Anony.force_stop_stream(i)
 
 @app.on_message(filters.regex("^اذن$"))
-async def strcall(client, message):
+def strcall(client, message):
 async def play(i)
   assistant = await group_assistant(Anony,i)
   file_path = "./AnonXMusic/assets/azan.mp3"
