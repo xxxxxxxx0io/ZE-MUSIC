@@ -95,7 +95,7 @@ def prayer_time():
        elif datetime.now(adox).strftime('%I:%M %p') == isha:  
          return "العشاء 🕊❤" 
    except Exception as e:
-       asyncio.sleep(5)
+       asyncio.sleep(4)
        print(e)        
       
 async def azan():
@@ -106,6 +106,6 @@ async def azan():
      for i in chat:
        await app.send_message(i, f"حان الان وقت اذان {prayer}")
        await play(i)
-     await asyncio.sleep(174)
+     await asyncio.sleep(177)
      await kill()
 #بحبك في الله اوعا تنسي تدعي لينيا واذكر المصدر يا ايوها الخماط بهزر معاك كلنا واحد مفيش حاجه اسمها بتسرق التلي كلو بيسرق❤
