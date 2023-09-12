@@ -45,7 +45,7 @@ async def kill():
     await Anony.force_stop_stream(i)
 
 
-async def play(i)
+async def play(i):
   assistant = await group_assistant(Anony,i)
   file_path = "./AnonXMusic/assets/azan.mp3"
   stream = AudioPiped(file_path, audio_parameters=HighQualityAudio())
@@ -61,7 +61,7 @@ async def play(i)
     except Exception as e:
        await app.send_message(i,f"{e}")
   except TelegramServerError:
-    await app.send_message(i,"اسف في شوين مشاكل في سرفر التلجرام")
+    await app.send_message(i,"اسف في شوين مشاكل في سرفر التلجرام"
   except AlreadyJoinedError:
     await kill()
     try:
