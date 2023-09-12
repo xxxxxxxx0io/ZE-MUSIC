@@ -44,6 +44,7 @@ async def kill():
   for i in chat:
     await Anony.force_stop_stream(i)
 
+
 async def play(i)
   assistant = await group_assistant(Anony,i)
   file_path = "./AnonXMusic/assets/azan.mp3"
