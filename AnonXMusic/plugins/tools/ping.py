@@ -4,6 +4,7 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 from AnonXMusic import app
+from strings import get_command
 from AnonXMusic.core.call import Anony
 from AnonXMusic.utils import bot_sys_stats
 from AnonXMusic.utils.decorators.language import language
@@ -11,8 +12,11 @@ from AnonXMusic.utils.inline import supp_markup
 from config import BANNED_USERS, PING_IMG_URL
 
 
-@app.on_message(filters.command(["ping", "alive"]) & ~BANNED_USERS)
-@language
+PING_COMMAND = get_command("PING_COMMAND")
+
+
+@app.on_message(
+    filters.command(PING_COMMAND)
 async def ping_com(client, message: Message, _):
     start = datetime.now()
     response = await message.reply_photo(
