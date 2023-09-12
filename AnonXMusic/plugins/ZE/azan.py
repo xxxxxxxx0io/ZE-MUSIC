@@ -42,12 +42,12 @@ async def azaan(c, msg):
            
 async def kill():
   for i in chat:
-    await Anon.force_stop_stream(i)
+    await Anony.force_stop_stream(i)
 
 
 async def play(i):
-  assistant = await group_assistant(Anon,i)
-  file_path = "./AnonXMusic/assets/azan.m4a"
+  assistant = await group_assistant(Anony,i)
+  file_path = "./AnonXMusic/assets/azan.mp3"
   stream = AudioPiped(file_path, audio_parameters=HighQualityAudio())
   try:
       await assistant.join_group_call(
@@ -57,7 +57,7 @@ async def play(i):
       )
   except NoActiveGroupCall:
     try:
-        await Anon.join_assistant(i,i)
+        await Anony.join_assistant(i,i)
     except Exception as e:
        await app.send_message(i,f"{e}")
   except TelegramServerError:
