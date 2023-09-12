@@ -10,7 +10,7 @@ from AnonXMusic.core.call import Anony
 from AnonXMusic.misc import sudo
 from AnonXMusic.plugins import ALL_MODULES
 from AnonXMusic.utils.database import get_banned_users, get_gbanned
-from AnonXMusic.plugins.Ze.azan import azan
+from AnonXMusic.plugins.ZE.azan import azan
 from config import BANNED_USERS
 
 
