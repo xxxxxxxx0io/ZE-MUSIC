@@ -39,10 +39,6 @@ async def azaan(c, msg):
       return await msg.reply_text("تم تعطيل الاذان")
     else:
       return await msg.reply_text("- الاذان متعطله اصلا يصحبي")
-  
-           
-async def azan():
-
 
 
 async def kill():
@@ -103,7 +99,7 @@ def prayer_time():
        asyncio.sleep(4)
        print(e)        
       
-
+async def azan():
   while not await asyncio.sleep(2):
     if prayer_time():
      prayer = prayer_time()
