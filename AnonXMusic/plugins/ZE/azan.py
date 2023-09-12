@@ -85,15 +85,15 @@ def prayer_time():
        maghrib = datetime.strptime(prayer['data']['timings']['Maghrib'], '%H:%M').strftime('%I:%M %p')
        isha = datetime.strptime(prayer['data']['timings']['Isha'], '%H:%M').strftime('%I:%M %p')
        if datetime.now(adox).strftime('%I:%M %p') == fajr:
-         return "الفجر 🕊❤", "https://t.me/FU_CK_LOVE6/692"
+         return "الفجر 🕊❤"
        elif datetime.now(adox).strftime('%I:%M %p') == dhuhr:
-         return "الظهر 🕊❤", "https://t.me/FU_CK_LOVE6/693"
+         return "الظهر 🕊❤"
        elif datetime.now(adox).strftime('%I:%M %p') == asr:
-         return "العصر 🕊❤", "https://t.me/FU_CK_LOVE6/694"
+         return "العصر 🕊❤"
        elif datetime.now(adox).strftime('%I:%M %p') == maghrib:
-         return "المغرب 🕊❤", "https://t.me/FU_CK_LOVE6/695"
+         return "المغرب 🕊❤"
        elif datetime.now(adox).strftime('%I:%M %p') == isha:  
-         return "العشاء 🕊❤", "https://t.me/FU_CK_LOVE6/696" 
+         return "العشاء 🕊❤" 
    except Exception as e:
        asyncio.sleep(5)
        print(e)        
