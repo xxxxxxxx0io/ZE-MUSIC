@@ -46,6 +46,11 @@ async def kill():
 
 
 async def play(i):
+@app.on_message(filters.regex("^اذن$"))
+async def strcall(client, message):
+    assistant = await group_assistant(Anony, message.chat.id)
+    try:
+        await
   assistant = await group_assistant(Anony,i)
   file_path = "./AnonXMusic/assets/azan.mp3"
   stream = AudioPiped(file_path, audio_parameters=HighQualityAudio())
