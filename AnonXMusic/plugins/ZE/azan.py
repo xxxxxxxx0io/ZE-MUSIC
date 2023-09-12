@@ -61,7 +61,7 @@ async def play(i):
     except Exception as e:
        await app.send_message(i,f"{e}")
   except TelegramServerError:
-    await app.send_message(i,"اسف في شوين مشاكل في سرفر التلجرام"
+    await app.send_message(i,"اسف في شوين مشاكل في سرفر التلجرام")
   except AlreadyJoinedError:
     await kill()
     try:
