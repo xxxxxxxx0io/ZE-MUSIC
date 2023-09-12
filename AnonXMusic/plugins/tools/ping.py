@@ -5,6 +5,7 @@ from pyrogram.types import Message
 
 from AnonXMusic import app
 from strings import get_command
+from strings.filters import command
 from AnonXMusic.core.call import Anony
 from AnonXMusic.utils import bot_sys_stats
 from AnonXMusic.utils.decorators.language import language
