@@ -29,16 +29,16 @@ chat = []
 async def azaan(c, msg):
   if msg.text == "تفعيل الاذان":
     if msg.chat.id in chat:
-      return await msg.reply_text("- الاذان متفعل اصلا يصحبي")
+      return await msg.reply_text("⁉️- الاذان متفعل اصلا يصحبي")
     else:
       chat.append(msg.chat.id)
-      return await msg.reply_text("تم تفعيل الاذان")
+      return await msg.reply_text("✅ تم تفعيل الاذان")
   elif msg.text == "تعطيل الاذان":
     if msg.chat.id in chat:
-      chat.remove(msg.chat.id)
-      return await msg.reply_text("تم تعطيل الاذان")
+      return await msg.reply_text("⁉️- الاذان متعطله اصلا يصحبي")
     else:
-      return await msg.reply_text("- الاذان متعطله اصلا يصحبي")
+      chat.remove(msg.chat.id)
+      return await msg.reply_text("✅ تم تعطيل الاذان")
 
 
 async def kill():
@@ -109,7 +109,5 @@ async def azan():
        await play(i)
      await asyncio.sleep(177)
      await kill()
-     except:
-         pass
 #بحبك في الله اوعا تنسي تدعي لينيا واذكر المصدر يا ايوها الخماط بهزر معاك كلنا واحد مفيش حاجه اسمها بتسرق التلي كلو بيسرق❤
 asyncio.create_task(azan())
