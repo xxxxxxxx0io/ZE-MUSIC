@@ -1,7 +1,3 @@
-#الكود دا بلحب محتاج بس ناس تدع انا و ايرور نعدي السنه دي علي خير
-#يوزري @PTPPE
-#يزور البولبول @E_Z_9
-#يوزر ايرور @S4ASA
 import asyncio
 from pyrogram import filters
 from pyrogram.errors import FloodWait
@@ -14,100 +10,97 @@ from AnonXMusic.core.call import Anony
 from pytgcalls import PyTgCalls, StreamType
 from pytgcalls.types.input_stream import AudioPiped, AudioVideoPiped
 from AnonXMusic.utils.database import *
-from pytgcalls.exceptions import (NoActiveGroupCall,TelegramServerError,AlreadyJoinedError)
-from pyrogram.errors import (
-    ChatAdminRequired,
-    UserAlreadyParticipant,
-    UserNotParticipant,
-)
-
-adox = pytz.timezone('Africa/Cairo')
-
-chat = []
-
-@app.on_message(filters.text & ~filters.private, group = 20)
-async def azaan(c, msg):
-  if msg.text == "تفعيل الاذان":
-    if msg.chat.id in chat:
-      return await msg.reply_text("⁉️- الاذان متفعل اصلا يصحبي")
-    else:
-      chat.append(msg.chat.id)
-      return await msg.reply_text("✅ تم تفعيل الاذان")
-  elif msg.text == "تعطيل الاذان":
-    if msg.chat.id in chat:
-      chat.remove(msg.chat.id)
-      return await msg.reply_text("✅ تم تعطيل الاذان")
-    else:
-     return await msg.reply_text("⁉️- الاذان متعطله اصلا يصحبي")
+from pytgcalls.exceptions import NoActiveGroupCall, TelegramServerError, AlreadyJoinedError
+from pyrogram.errors import ChatAdminRequired, UserAlreadyParticipant, UserNotParticipant
 
 
-async def kill():
-  for i in chat:
-    await Anony.force_stop_stream(i)
+cairo_timezone = pytz.timezone('Africa/Cairo')
 
 
-async def play(i):
-  assistant = await group_assistant(Anony,i)
-  file_path = "./AnonXMusic/assets/azan.mp3"
-  stream = AudioPiped(file_path)
-  try:
-      await assistant.join_group_call(
-           i,
-           stream,
-           stream_type=StreamType().pulse_stream,
-      )
-  except NoActiveGroupCall:
-    try:
-        await Anony.join_assistant(i,i)
-    except Exception as e:
-       await app.send_message(i,f"{e}")
-  except TelegramServerError:
-    await app.send_message(i,"اسف في شوين مشاكل في سرفر التلجرام")
-  except AlreadyJoinedError:
-    await kill()
+azan_enabled_chats = []
+
+@app.on_message(filters.text & ~filters.private, group=20)
+async def handle_azan_command(c, msg):
+    chat_id = msg.chat.id
+    if msg.text == "تفعيل الاذان":
+        if chat_id in azan_enabled_chats:
+            await msg.reply_text("الأذان مفعل بالفعل في هذه المجموعة")
+        else:
+            azan_enabled_chats.append(chat_id)
+            await msg.reply_text("تم تفعيل الأذان بنجاح")
+    elif msg.text == "تعطيل الاذان":
+        if chat_id in azan_enabled_chats:
+            azan_enabled_chats.remove(chat_id)
+            await msg.reply_text("تم تعطيل الأذان بنجاح")
+        else:
+            await msg.reply_text("الأذان معطل بالفعل في هذه المجموعة")
+
+async def stop_azan():
+    for chat_id in azan_enabled_chats:
+        await Anony.force_stop_stream(chat_id)
+
+async def play_azan(chat_id):
+    assistant = await group_assistant(Anony, chat_id)
+    azan_audio_path = "./AnonXMusic/assets/azan.mp3"
+    stream = AudioPiped(azan_audio_path)
     try:
         await assistant.join_group_call(
-           i,
-           stream,
-           stream_type=StreamType().pulse_stream,
+            chat_id,
+            stream,
+            stream_type=StreamType().pulse_stream,
         )
-    except Exception as e:
-        await app.send_message(i,f"{e}")
+    except NoActiveGroupCall:
+        try:
+            await Anony.join_assistant(chat_id, chat_id)
+        except Exception as e:
+            await app.send_message(chat_id, f"خطأ: {e}")
+    except TelegramServerError:
+        await app.send_message(chat_id, "عذرًا، هناك مشكلات في سيرفر التليجرام")
+    except AlreadyJoinedError:
+        await stop_azan()
+        try:
+            await assistant.join_group_call(
+                chat_id,
+                stream,
+                stream_type=StreamType().pulse_stream,
+            )
+        except Exception as e:
+            await app.send_message(chat_id, f"خطأ: {e}")
 
-      
-#موعيد الاذان وخدها من ايرور عشان هوا واحد هكور      
-def prayer_time():
-   try:
-       prayer = requests.get(f"http://api.aladhan.com/timingsByAddress?address=Cairo&method=4&school=0")
-       prayer = prayer.json()
-       fajr = datetime.strptime(prayer['data']['timings']['Fajr'], '%H:%M').strftime('%I:%M %p')
-       dhuhr = datetime.strptime(prayer['data']['timings']['Dhuhr'], '%H:%M').strftime('%I:%M %p')
-       asr = datetime.strptime(prayer['data']['timings']['Asr'], '%H:%M').strftime('%I:%M %p')
-       maghrib = datetime.strptime(prayer['data']['timings']['Maghrib'], '%H:%M').strftime('%I:%M %p')
-       isha = datetime.strptime(prayer['data']['timings']['Isha'], '%H:%M').strftime('%I:%M %p')
-       if datetime.now(adox).strftime('%I:%M %p') == fajr:
-         return "الفجر 🕊❤"
-       elif datetime.now(adox).strftime('%I:%M %p') == dhuhr:
-         return "الظهر 🕊❤"
-       elif datetime.now(adox).strftime('%I:%M %p') == asr:
-         return "العصر 🕊❤"
-       elif datetime.now(adox).strftime('%I:%M %p') == maghrib:
-         return "المغرب 🕊❤"
-       elif datetime.now(adox).strftime('%I:%M %p') == isha:  
-         return "العشاء 🕊❤" 
-   except Exception as e:
-       asyncio.sleep(4)
-       print(e)        
-      
-async def azan():
-  while not await asyncio.sleep(2):
-    if prayer_time():
-     prayer = prayer_time()
-     await kill()
-     for i in chat:
-       await app.send_message(i,f"حان الان وقت اذان {prayer}")
-       await play(i)
-     await asyncio.sleep(177)
-     await kill()
-#بحبك في الله اوعا تنسي تدعي لينيا واذكر المصدر يا ايوها الخماط بهزر معاك كلنا واحد مفيش حاجه اسمها بتسرق التلي كلو بيسرق❤
-asyncio.create_task(azan())
+def get_prayer_time():
+    try:
+        prayer_times_response = requests.get("http://api.aladhan.com/timingsByAddress?address=Cairo&method=4&school=0").json()
+        fajr_time = datetime.strptime(prayer_times_response['data']['timings']['Fajr'], '%H:%M').strftime('%I:%M %p')
+        dhuhr_time = datetime.strptime(prayer_times_response['data']['timings']['Dhuhr'], '%H:%M').strftime('%I:%M %p')
+        asr_time = datetime.strptime(prayer_times_response['data']['timings']['Asr'], '%H:%M').strftime('%I:%M %p')
+        maghrib_time = datetime.strptime(prayer_times_response['data']['timings']['Maghrib'], '%H:%M').strftime('%I:%M %p')
+        isha_time = datetime.strptime(prayer_times_response['data']['timings']['Isha'], '%H:%M').strftime('%I:%M %p')
+        
+        current_time = datetime.now(cairo_timezone).strftime('%I:%M %p')
+        
+        if current_time == fajr_time:
+            return "اذان الفجر🕊❤"
+        elif current_time == dhuhr_time:
+            return "اذان الظهر 🕊❤"
+        elif current_time == asr_time:
+            return "اذان العصر 🕊❤"
+        elif current_time == maghrib_time:
+            return "اذان المغرب 🕊❤"
+        elif current_time == isha_time:
+            return "اذان العشاء 🕊❤"
+    except Exception as e:
+        asyncio.sleep(4)
+        print(e)
+
+async def azan_scheduler():
+    while True:
+        prayer_time = get_prayer_time()
+        if prayer_time:
+            await stop_azan()
+            for chat_id in azan_enabled_chats:
+                await app.send_message(chat_id, f"حان الآن وقت {prayer_time}، جاري تشغيل الآذان...")
+                await play_azan(chat_id)
+            await asyncio.sleep(177)
+        await asyncio.sleep(2)
+
+asyncio.create_task(azan_scheduler())
