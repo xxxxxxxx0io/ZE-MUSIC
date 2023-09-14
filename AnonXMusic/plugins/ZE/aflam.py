@@ -11,14 +11,14 @@ from strings.filters import command
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message, CallbackQuery
 from AnonXMusic import app
+from pyrogram import enums
+from pyrogram.enums import ChatMemberStatus
+
 
 
 # Replay Text
 
-@app.on_message(
-    command(["افلام"])
-    & ~filters.edited_group_posts
-)
+@app.on_message(command(["افلام"]) & ~filters.edited)
 async def aflamAR(c: Client, m: Message):
     global mid
     mid = m.message_id
