@@ -12,7 +12,7 @@ from AnonXMusic.utils.database import *
 from pyrogram.raw.functions.phone import CreateGroupCall, DiscardGroupCall
 from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant, ChatAdminRequired
 from AnonXMusic import app , Userbot
-from AnonXMusic.utils.decorators import is_Admin
+from AnonXMusic.utils.decorators.admin import is_Admin
 
 async def get_group_call(
     client: Client, message: Message, err_msg: str = ""
