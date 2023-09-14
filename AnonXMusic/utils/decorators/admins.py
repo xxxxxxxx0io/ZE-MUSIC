@@ -103,7 +103,29 @@ def AdminRightsCheck(mystic):
 
     return wrapper
 
-
+async def is_Admin(chat,id,msg):
+  if await is_maintenance() is False:
+     if msg.from_user.id not in SUDOERS:
+        return await msg.reply_text(
+           "» ʙᴏᴛ ɪs ᴜɴᴅᴇʀ ᴍᴀɪɴᴛᴇɴᴀɴᴄᴇ ғᴏʀ sᴏᴍᴇ ᴛɪᴍᴇ, ᴩʟᴇᴀsᴇ ᴠɪsɪᴛ sᴜᴩᴩᴏʀᴛ ᴄʜᴀᴛ ᴛᴏ ᴋɴᴏᴡ ᴛʜᴇ ʀᴇᴀsᴏɴ."
+        )
+  if await is_commanddelete_on(chat):
+     try:
+      await msg.delete()
+     except:
+       pass
+  is_non_admin = await is_nonadmin_chat(chat)
+  if not is_non_admin:
+    if msg.from_user.id not in SUDOERS:
+       admins = []
+       async for m in app.get_chat_members(chat, filter=enums.ChatMembersFilter.ADMINISTRATORS):
+            admins.append(m.user.id)
+       if id in admins :
+          return True
+       else : 
+          return False
+    else:
+      return True
 def AdminActual(mystic):
     async def wrapper(client, message):
         if await is_maintenance() is False:
