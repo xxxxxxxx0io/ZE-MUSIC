@@ -7,11 +7,10 @@
 
 import asyncio
 
-from strings import get_command
 from strings.filters import command
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message, CallbackQuery
-from AnonX import app
+from AnonXMusic import app
 
 
 # Replay Text
