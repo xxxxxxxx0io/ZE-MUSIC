@@ -69,19 +69,19 @@ async def creator(c,msg):
          if m.status == ChatMemberStatus.OWNER:
             x.append(m.user.id)
     if len(x) != 0:        
-       lol = await app.get_users(int(x[0]))
-       lol = await app.get_owner_bio(bio) 
-       if lol.photo:
+       adox = await app.get_users(int(x[0]))
+       bio =  adox.bio
+       if adox.photo:
          async for photo in app.get_chat_photos(x[0],limit=1):
-          await msg.reply_photo(photo.file_id,caption=f"᥆ꪝᥒ꧖ᖇ | - {lol.mention} 🦕\n\nႦᎥ᥆ | - {lol.bio} 🦕",reply_markup=InlineKeyboardMarkup(
+          await msg.reply_photo(photo.file_id,caption=f"᥆ꪝᥒ꧖ᖇ | - {adox.mention} 🦕\n\nႦᎥ᥆ | - {bio} 🦕",reply_markup=InlineKeyboardMarkup(
              [              
                [          
-                 InlineKeyboardButton(lol.first_name, url=f"https://t.me/{lol.username}")
+                 InlineKeyboardButton(adox.first_name, url=f"https://t.me/{adox.username}")
                ],             
              ]                 
             )                     
           )
        else:
-        await msg.reply_text(f"᥆ꪝᥒ꧖ᖇ | - {lol.mention} 🦕\n\nႦᎥ᥆ | - {lol.bio} 🦕", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(lol.first_name, url=f"https://t.me/{lol.username}")],]))
+        await msg.reply_text(f"᥆ꪝᥒ꧖ᖇ | - {adox.mention} 🦕\n\nႦᎥ᥆ | - {bio} 🦕", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(adox.first_name, url=f"https://t.me/{adox.username}")],]))
     else:
         await msg.reply_text("الاك محذوف يقلب")
