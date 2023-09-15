@@ -5,72 +5,43 @@ import requests
 import aiohttp
 from pyrogram import filters
 from pyrogram import Client
+from telegraph import upload_file
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup
 from strings.filters import command
 from AnonXMusic import (Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app)
 from AnonXMusic import app
 from asyncio import gather
-from strings.filters import command
 from pyrogram import enums
 from pyrogram.enums import ChatMemberStatus
 
-@app.on_message(command(["ميديا", "تلغراف ميديا"]) & filters.group )
-async def telegraph(client: Client, message: Message):
-    replied = message.reply_to_message
-    if not replied:
-        await message.reply("🤕 ¦ الرد على ملف وسائط مدعوم\n• حط صوره و اكتب عليها 00")
-        return
-    if not (
-        (replied.photo and replied.photo.file_size <= 5242880)
-        or (replied.animation and replied.animation.file_size <= 5242880)
-        or (
-            replied.video
-            and replied.video.file_name.endswith(".mp4")
-            and replied.video.file_size <= 5242880
-        )
-        or (
-            replied.document
-            and replied.document.file_name.endswith(
-                (".jpg", ".jpeg", ".png", ".gif", ".mp4"),
-            )
-            and replied.document.file_size <= 5242880
-        )
-    ):
-        await message.reply("غير مدعوم!!")
-        return
-    download_location = await client.download_media(
-        message=message.reply_to_message,
-        file_name="root/downloads/",
-    )
+@app.on_message(command(["تليجراف","ميديا"]))
+async def get_link_group(client, message):
     try:
-        response = upload_file(download_location)
-    except Exception as document:
-        await message.reply(message, text=document)
-    else:
-        await message.reply(
-            f"<b>• الــرابـط:-</b>\n\n <code>https://telegra.ph{response[0]}</code>",
-            quote=True,
-            reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(text="🦕 ¦ افـتح الـرابـط", url=f"https://telegra.ph{response[0]}"),
-                    InlineKeyboardButton(text="🧚🏻‍♀️️ ¦ مشـاركه الـرابـط", url=f"https://telegram.me/share/url?url=https://telegra.ph{response[0]}")
-                ],
-            ]
-        )
-    )
-    finally:
-        os.remove(download_location)
+        text = await message.reply("جاري الرفع....")
+        async def progress(current, total):
+            await text.edit_text(f"🦕 يتم رفع الوسائط ... {current * 100 / total:.1f}%")
+        try:
+            location = f"./media/group/"
+            local_path = await message.reply_to_message.download(location, progress=progress)
+            await text.edit_text(" يتم جلب الرابط ... 🦕")
+            upload_path = upload_file(local_path) 
+            await text.edit_text(f"**🦕 |  𝒕𝒆𝒍𝒆 𝒍𝒊𝒏𝒌 **:\n\n<code>https://telegra.ph{upload_path[0]}</code>")     
+            os.remove(local_path) 
+        except Exception as e:
+            await text.edit_text(f"**❌ | File upload failed**\n\n<i>**Reason**: {e}</i>")
+            os.remove(local_path) 
+            return         
+    except Exception:
+        pass
+    
     
 @app.on_message(command(["المالك", "صاحب الخرابه"]) & filters.group )
 async def creator(c,msg):
     x = []
     async for m in app.get_chat_members(msg.chat.id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
          if m.status == ChatMemberStatus.OWNER:
-            x.append(m.user.id)
-    if len(x) != 0:        
-       adox = await app.get_users(int(x[0]))
-       bio =  adox.bio
+            adox = await client.get_chat(chat_id=dev)
+            bio = adox.bio
        if adox.photo:
          async for photo in app.get_chat_photos(x[0],limit=1):
           await msg.reply_photo(photo.file_id,caption=f"᥆ꪝᥒ꧖ᖇ | - {adox.mention} 🦕\n\nႦᎥ᥆ | - {bio} 🦕",reply_markup=InlineKeyboardMarkup(
