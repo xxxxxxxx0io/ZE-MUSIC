@@ -14,7 +14,7 @@ from strings.filters import command
 from pyrogram import enums
 from pyrogram.enums import ChatMemberStatus
 
-@app.on_message(command(["تلغراف", "تلغراف ميديا", "ميديا"]) & ~filters.edited)
+@app.on_message(filters.command(["تلغراف", "تلغراف ميديا", "ميديا"]) & filters.edited & ~BANNED_USERS)
 async def telegraph(client: Client, message: Message):
     replied = message.reply_to_message
     if not replied:
@@ -62,7 +62,7 @@ async def telegraph(client: Client, message: Message):
     finally:
         os.remove(download_location)
     
-@app.on_message(command(["المالك"]))
+@app.on_message(filters.command(["المالك"]))
 async def creator(c,msg):
     x = []
     async for m in app.get_chat_members(msg.chat.id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
