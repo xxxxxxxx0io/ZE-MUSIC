@@ -45,13 +45,13 @@ async def creator(c, msg):
                 async for photo in app.get_chat_photos(m.user.id, limit=1):
                     await msg.reply_photo(
                         photo.file_id,
-                        caption=f"᥆ꪝᥒ꧖ᖇ | - {adox.mention} 🦕\n\nႦᎥ᥆ | - {bio} 🦕",
+                        caption=f"᥆ꪝᥒ꧖ᖇ | - {adox.mention_markdown} 🦕\n\nႦᎥ᥆ | - {adox.bio} 🦕",
                         reply_markup=InlineKeyboardMarkup(
                             [[InlineKeyboardButton(adox.first_name, url=f"https://t.me/{adox.username}")]])
                     )
             else:
                 await msg.reply_text(
-                    f"᥆ꪝᥒ꧖ᖇ | - {adox.mention} 🦕\n\nႦᎥ᥆ | - {bio} 🦕",
+                    f"᥆ꪝᥒ꧖ᖇ | - {adox.mention_markdown} 🦕\n\nႦᎥ᥆ | - {adox.bio} 🦕",
                     reply_markup=InlineKeyboardMarkup(
                         [[InlineKeyboardButton(adox.first_name, url=f"https://t.me/{adox.username}")]]
                     )
