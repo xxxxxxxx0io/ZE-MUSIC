@@ -35,24 +35,27 @@ async def get_link_group(client, message):
         pass
     
     
-@app.on_message(command(["المالك", "صاحب الخرابه"]) & filters.group )
-async def creator(c,msg):
+@app.on_message(command(["المالك", "صاحب الخرابه"]) & filters.group)
+async def creator(c, msg):
     x = []
     async for m in app.get_chat_members(msg.chat.id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
-         if m.status == ChatMemberStatus.OWNER:
-            adox = await client.get_chat(chat_id=dev)
+        if m.status == ChatMemberStatus.OWNER:
+            adox = await app.get_chat(chat_id=m.user.id)
             bio = adox.bio
-       if adox.photo:
-        async for photo in app.get_chat_photos(x[0],limit=1):
-          await msg.reply_photo(photo.file_id,caption=f"᥆ꪝᥒ꧖ᖇ | - {adox.mention} 🦕\n\nႦᎥ᥆ | - {bio} 🦕",reply_markup=InlineKeyboardMarkup(
-             [              
-               [          
-                 InlineKeyboardButton(adox.first_name, url=f"https://t.me/{adox.username}")
-               ],             
-             ]                 
-            )                     
-          )
-       else:
-        await msg.reply_text(f"᥆ꪝᥒ꧖ᖇ | - {adox.mention} 🦕\n\nႦᎥ᥆ | - {bio} 🦕", reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton(adox.first_name, url=f"https://t.me/{adox.username}")],]))
+            if adox.photo:
+                async for photo in app.get_chat_photos(m.user.id, limit=1):
+                    await msg.reply_photo(
+                        photo.file_id,
+                        caption=f"᥆ꪝᥒ꧖ᖇ | - {adox.mention} 🦕\n\nႦᎥ᥆ | - {bio} 🦕",
+                        reply_markup=InlineKeyboardMarkup(
+                            [[InlineKeyboardButton(adox.first_name, url=f"https://t.me/{adox.username}")]])
+                    )
+            else:
+                await msg.reply_text(
+                    f"᥆ꪝᥒ꧖ᖇ | - {adox.mention} 🦕\n\nႦᎥ᥆ | - {bio} 🦕",
+                    reply_markup=InlineKeyboardMarkup(
+                        [[InlineKeyboardButton(adox.first_name, url=f"https://t.me/{adox.username}")]]
+                    )
+                )
     else:
         await msg.reply_text("الاك محذوف يقلب")
