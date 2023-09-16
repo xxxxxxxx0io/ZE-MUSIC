@@ -5,7 +5,6 @@ import requests
 import aiohttp
 from pyrogram import filters
 from pyrogram import Client
-from telegraph import upload_file
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup
 from strings.filters import command
 from AnonXMusic import (Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app)
