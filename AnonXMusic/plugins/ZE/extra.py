@@ -42,8 +42,8 @@ async def creator(c,msg):
          if m.status == ChatMemberStatus.OWNER:
             adox = await client.get_chat(chat_id=dev)
             bio = adox.bio
-       if adox.photo: 
-         async for photo in app.get_chat_photos(x[0],limit=1):
+       if adox.photo:
+        async for photo in app.get_chat_photos(x[0],limit=1):
           await msg.reply_photo(photo.file_id,caption=f"᥆ꪝᥒ꧖ᖇ | - {adox.mention} 🦕\n\nႦᎥ᥆ | - {bio} 🦕",reply_markup=InlineKeyboardMarkup(
              [              
                [          
