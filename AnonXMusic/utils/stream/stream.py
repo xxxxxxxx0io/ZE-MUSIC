@@ -418,3 +418,12 @@ async def stream(
             db[chat_id][0]["mystic"] = run
             db[chat_id][0]["markup"] = "tg"
             await mystic.delete()
+
+@app.on_message(filters.command(["مين شغل"]))
+async def get_current_file(client, message):
+    if queue:
+        current_file = queue[0]
+        file_info = f"اسم الملف: {current_file['title']}\nمدة الملف: {current_file['duration_min']}\nاسم الشخص الذي شغل الملف: {current_file['user_name']}"
+        await message.reply(file_info, reply_to_message_id=message.message_id)
+    else:
+        await message.reply("مفيش حاجه شغاله يصحبي.", reply_to_message_id=message.message_id)
