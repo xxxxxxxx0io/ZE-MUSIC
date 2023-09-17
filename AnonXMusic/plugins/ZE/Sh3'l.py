@@ -8,7 +8,7 @@ from pyrogram.types import Message
 from AnonXMusic import app
 
 
-@app.on_message(command("زخرفه"))
+@app.on_message(filters.command("زخرفه"))
 async def zahrafa(c: Client, m: Message):
     text_list = m.text.split(None, 1)
     if len(text_list) < 2:
