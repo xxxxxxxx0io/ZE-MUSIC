@@ -419,7 +419,7 @@ async def stream(
             db[chat_id][0]["markup"] = "tg"
             await mystic.delete()
 
-@app.on_message(filters.command(["مين شغل"]))
+@app.on_message(filters.command(["مين شغل"]) & ~filters.group )
 async def get_current_file(client, message):
     if queue:
         current_file = queue[0]
